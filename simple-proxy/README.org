@@ -1,0 +1,17 @@
+#+TITLE: Simple nginx proxy example
+#+DATE: 2019-04-25
+#+AUTHOR: Leo Euler <euler@gmx.us>
+
+#+BEGIN_SRC conf
+server {
+	listen 80;
+	listen [::]:80;
+
+	server_name local-site.com;
+
+	location / {
+		 proxy_pass http://remote-site.com/;
+	}
+
+}
+#+END_SRC
