@@ -1,0 +1,24 @@
+#+TITLE: Simple nginx proxy example
+#+DATE: 2019-04-29
+#+AUTHOR: Leo Euler <euler@gmx.us>
+
+If remote server requires basic authorization you need to set the
+Authorization header.
+
+#+BEGIN_SRC conf :tangle remote-basic-auth-proxy.conf
+server {
+	listen 80;
+	listen [::]:80;
+
+	server_name local-site.com;
+
+	location / {
+	         proxy_set_header Authorization "Basic Zm9vOmJhcg==";
+		 proxy_pass http://remote-site.com/;
+	}
+
+}
+#+END_SRC
+
+=Zm9vOmJhcg=== is [[https://www.opinionatedgeek.com/codecs/base64encoder][Base64-encoded]] =foo:bar= string. This will forward
+all connections to http://foo:bar@remote-site.com/.
